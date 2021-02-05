@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acute inflammations in the urinary system</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma-checkradio@2.1.1/dist/css/bulma-checkradio.min.css"
+    />
+    <style>
+      .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 10px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: 0.2s;
+        transition: opacity 0.2s;
+      }
+
+      .slider:hover {
+        opacity: 1;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #4caf50;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      .slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #4caf50;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <section class="hero is-primary">
+          <div class="hero-body">
+            <p class="title">Acute inflammations in the urinary system</p>
+            <p class="subtitle">AI-powered presumptive diagnosis</p>
+            <p>
+              <button class="button is-warning" id="btnCheckSymptoms">
+                Check your symptoms
+              </button>
+            </p>
+          </div>
+        </section>
+        <section class="section">
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="subtitle">Inflammation of urinary bladder</p>
+                <p class="content">
+                  Characterised by sudden occurrence of pains in the abdomen
+                  region and the urination in form of constant urine pushing,
+                  micturition pains and sometimes lack of urine keeping.
+                  Temperature of the body is rising, however most often not
+                  above 38C. The excreted urine is turbid and sometimes bloody.
+                  At proper treatment, symptoms decay usually within several
+                  days. However, there is inclination to returns. At persons
+                  with acute inflammation of urinary bladder, we should expect
+                  that the illness will turn into protracted form.
+                </p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="subtitle">Acute nephritis</p>
+                <p class="content">
+                  Acute nephritis of renal pelvis origin occurs considerably
+                  more often at women than at men. It begins with sudden fever,
+                  which reaches, and sometimes exceeds 40C. The fever is
+                  accompanied by shivers and one- or both-side lumbar pains,
+                  which are sometimes very strong. Symptoms of acute
+                  inflammation of urinary bladder appear very often. Quite not
+                  infrequently there are nausea and vomiting and spread pains of
+                  whole abdomen.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Check Your Symptoms dialog -->
+    <div class="modal" id="modalCheckSymptoms">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Check your symptoms</p>
+          <button class="delete" aria-label="close" id="btnCloseModal"></button>
+        </header>
+        <section class="modal-card-body">
+          <form name="frm" id="frm">
+            {% csrf_token %}
+
+            <!-- Temperature -->
+            <div class="field">
+              <label class="label">Temperature (Celcius)</label>
+              <div class="control">
+                <div class="columns">
+                  <div class="column is-four-fifths">
+                    <input
+                      id="rangeTemperature"
+                      name="rangeTemperature"
+                      min="35"
+                      max="42"
+                      value="37"
+                      step="0.2"
+                      type="range"
+                      class="slider"
+                    />
+                  </div>
+                  <div class="column is-one-fifth">
+                    <span id="lblTemperature" class="tag is-black">37.0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nausea -->
+            <div class="field">
+              <label class="label">Occurrence of nausea?</label>
+              <div class="control">
+                <input
+                  class="is-checkradio"
+                  id="nausea"
+                  type="radio"
+                  name="nausea"
+                  checked="checked"
+                  value="0"
+                />
+                <label for="nausea">No</label>
+
+                <input
+                  class="is-checkradio"
+                  id="nausea2"
+                  type="radio"
+                  name="nausea"
+                  value="1"
+                />
+                <label for="nausea2">Yes</label>
+              </div>
+            </div>
+
+            <!-- Lumbar pain -->
+            <div class="field">
+              <label class="label">Lumbar pain?</label>
+              <div class="control">
+                <input
+                  class="is-checkradio"
+                  id="lumbarPain"
+                  type="radio"
+                  name="lumbarPain"
+                  checked="checked"
+                  value="0"
+                />
+                <label for="lumbarPain">No</label>
+
+                <input
+                  class="is-checkradio"
+                  id="lumbarPain2"
+                  type="radio"
+                  name="lumbarPain"
+                  value="1"
+                />
+                <label for="lumbarPain2">Yes</label>
+              </div>
+            </div>
+
+            <!-- Urine pushing -->
+            <div class="field">
+              <label class="label">Continuous need for urination?</label>
+              <div class="control">
+                <input
+                  class="is-checkradio"
+                  id="urinePushing"
+                  type="radio"
+                  name="urinePushing"
+                  checked="checked"
+                  value="0"
+                />
+                <label for="urinePushing">No</label>
+
+                <input
+                  class="is-checkradio"
+                  id="urinePushing2"
+                  type="radio"
+                  name="urinePushing"
+                  value="1"
+                />
+                <label for="urinePushing2">Yes</label>
+              </div>
+            </div>
+
+            <!-- Micturition pains -->
+            <div class="field">
+              <label class="label">Micturition pains?</label>
+              <div class="control">
+                <input
+                  class="is-checkradio"
+                  id="micturitionPain"
+                  type="radio"
+                  name="micturitionPain"
+                  checked="checked"
+                  value="0"
+                />
+                <label for="micturitionPain">No</label>
+
+                <input
+                  class="is-checkradio"
+                  id="micturitionPain2"
+                  type="radio"
+                  name="micturitionPain"
+                  value="1"
+                />
+                <label for="micturitionPain2">Yes</label>
+              </div>
+            </div>
+
+            <!-- Burning of urethra, itch, swelling of urethra outlet -->
+            <div class="field">
+              <label class="label"
+                >Burning of urethra, itch, swelling of urethra outlet?</label
+              >
+              <div class="control">
+                <input
+                  class="is-checkradio"
+                  id="urethraBurning"
+                  type="radio"
+                  name="urethraBurning"
+                  checked="checked"
+                  value="0"
+                />
+                <label for="urethraBurning">No</label>
+
+                <input
+                  class="is-checkradio"
+                  id="urethraBurning2"
+                  type="radio"
+                  name="urethraBurning"
+                  value="1"
+                />
+                <label for="urethraBurning2">Yes</label>
+              </div>
+            </div>
+          </form>
+          <table class="table">
+            <tbody id="tblResult"></tbody>
+          </table>
+        </section>
+        <footer class="modal-card-foot" id="modalFooter">
+          <div class="container">
+            <button class="button is-primary is-pulled-right" id="btnDiagnose">
+              Diagnose
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script>
+      var modalCheckSymptoms = document.getElementById("modalCheckSymptoms");
+      var btnCheckSymptoms = document.getElementById("btnCheckSymptoms");
+      var btnCloseModal = document.getElementById("btnCloseModal");
+      var rangeTemperature = document.getElementById("rangeTemperature");
+      var lblTemperature = document.getElementById("lblTemperature");
+      var btnDiagnose = document.getElementById("btnDiagnose");
+      var tblResult = document.getElementById("tblResult");
+      var frm = document.getElementById("frm");
+      var modalFooter = document.getElementById("modalFooter");
+
+      // prettier-ignore
+      function showResult(input, output) {
+        var bladderInfHtml = output['bladder_inflammation'] == 1 ? "<div class='notification is-danger'>Bladder inflammation: YES</div>" : "<div class='notification is-success is-light'>Bladder inflammation: NO</div>" 
+        var nephritisHtml = output['nephritis'] == 1 ? "<div class='notification is-danger'>Acute nephritis: YES</div>" : "<div class='notification is-success is-light'>Acute nephritis: NO</div>" 
+
+        var resultHtml = ""
+        resultHtml += "<tr><th colspan='2'>" + bladderInfHtml + "</th></tr>"
+        resultHtml += "<tr><th colspan='2'>" + nephritisHtml + "</th></tr>"
+        resultHtml += "<tr><td>Temperature</td><td>" + input['temperature'] + "</td></tr>"
+        resultHtml += "<tr><td>Nausea?</td><td>" + (input['nausea'] == 1 ? "Yes" : "No") + "</td></tr>"
+        resultHtml += "<tr><td>Lumbar pain?</td><td>" + (input['lumbar_pain'] == 1 ? "Yes" : "No") + "</td></tr>"
+        resultHtml += "<tr><td>Urine pushing?</td><td>" + (input['urine_pushing'] == 1 ? "Yes" : "No") + "</td></tr>"
+        resultHtml += "<tr><td>Micturition pains?</td><td>" + (input['micturition_pains'] == 1 ? "Yes" : "No") + "</td></tr>"
+        resultHtml += "<tr><td>Burning of urethra, itch, swelling of urethra outlet?</td><td>" + (input['urethra_burning'] == 1 ? "Yes" : "No") + "</td></tr>"
+        resultHtml += "<tr><td colspan='2'>&nbsp;</td></tr>"
+
+        tblResult.innerHTML = resultHtml
+        tblResult.style.display = "block"
+        frm.style.display = "none"
+        modalFooter.style.display = "none"
+      }
+
+      function resetModal() {
+        frm.reset();
+        lblTemperature.innerHTML = "37.0";
+        tblResult.style.display = "none";
+        frm.style.display = "block";
+        modalFooter.style.display = "block";
+      }
+
+      btnCheckSymptoms.onclick = function () {
+        modalCheckSymptoms.classList.add("is-active");
+      };
+
+      btnCloseModal.onclick = function () {
+        modalCheckSymptoms.classList.remove("is-active");
+        resetModal();
+      };
+
+      rangeTemperature.oninput = function () {
+        var val = (Math.round(this.value * 10) / 10).toFixed(1);
+        lblTemperature.innerHTML = val;
+      };
+
+      btnDiagnose.onclick = function () {
+        var f = document.forms["frm"];
+        // prettier-ignore
+        var input = {
+          temperature: parseFloat(f.rangeTemperature.value),
+          nausea: parseInt(document.querySelector('input[name="nausea"]:checked').value),
+          lumbar_pain: parseInt(document.querySelector('input[name="lumbarPain"]:checked').value),
+          urine_pushing: parseInt(document.querySelector('input[name="urinePushing"]:checked').value),
+          micturition_pains: parseInt(document.querySelector('input[name="micturitionPain"]:checked').value),
+          urethra_burning: parseInt(document.querySelector('input[name="urethraBurning"]:checked').value),
+        };
+
+        btnDiagnose.classList.add("is-loading");
+
+        // prettier-ignore
+        fetch("/predict", {
+          method: "POST",
+          headers: {
+            ContenType: "application/json",
+            "X-CSRFToken": document.querySelector('input[name="csrfmiddlewaretoken"]').value
+          },
+          body: JSON.stringify(input)
+        })
+        .then(res => res.json())
+        .then(output => {
+          btnDiagnose.classList.remove("is-loading");
+          showResult(input, output)
+        })
+      };
+    </script>
+  </body>
+</html>
