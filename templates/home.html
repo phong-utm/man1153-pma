@@ -18,6 +18,7 @@
   <body>
     <section class="section">
       <div class="container is-max-desktop">
+        <!-- hero banner -->
         <section class="hero is-primary">
           <div class="hero-body">
             <p class="subtitle">AI-powered Presumptive Diagnosis</p>
@@ -29,45 +30,69 @@
             </div>
           </div>
         </section>
+
+        <!-- Acute inflammation information -->
         <section class="section">
-          <div class="tile is-ancestor">
-            <div class="tile is-parent">
-              <article class="tile is-child notification">
-                <p class="subtitle">Inflammation of urinary bladder</p>
-                <p class="content">
-                  Characterised by sudden occurrence of pains in the abdomen
-                  region and the urination in form of constant urine pushing,
-                  micturition pains and sometimes lack of urine keeping.
-                  Temperature of the body is rising, however most often not
-                  above 38C. The excreted urine is turbid and sometimes bloody.
-                  At proper treatment, symptoms decay usually within several
-                  days. However, there is inclination to returns. At persons
-                  with acute inflammation of urinary bladder, we should expect
-                  that the illness will turn into protracted form.
-                </p>
-              </article>
+          <div class="tile is-ancestor is-vertical">
+            <!-- Introduction to bladder inflammation and acute nephritis -->
+            <div class="tile">
+              <div class="tile is-parent">
+                <article class="tile is-child notification">
+                  <p class="subtitle">Inflammation of urinary bladder</p>
+                  <p class="content">
+                    Characterised by sudden occurrence of pains in the abdomen
+                    region and the urination in form of constant urine pushing,
+                    micturition pains and sometimes lack of urine keeping.
+                    Temperature of the body is rising, however most often not
+                    above 38C. The excreted urine is turbid and sometimes
+                    bloody. At proper treatment, symptoms decay usually within
+                    several days. However, there is inclination to returns. At
+                    persons with acute inflammation of urinary bladder, we
+                    should expect that the illness will turn into protracted
+                    form.
+                  </p>
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child notification">
+                  <p class="subtitle">Acute nephritis</p>
+                  <p class="content">
+                    Acute nephritis of renal pelvis origin occurs considerably
+                    more often at women than at men. It begins with sudden
+                    fever, which reaches, and sometimes exceeds 40C. The fever
+                    is accompanied by shivers and one- or both-side lumbar
+                    pains, which are sometimes very strong. Symptoms of acute
+                    inflammation of urinary bladder appear very often. Quite not
+                    infrequently there are nausea and vomiting and spread pains
+                    of whole abdomen.
+                  </p>
+                </article>
+              </div>
             </div>
+
+            <!-- A stacked bar chart on common symptoms -->
             <div class="tile is-parent">
-              <article class="tile is-child notification">
-                <p class="subtitle">Acute nephritis</p>
-                <p class="content">
-                  Acute nephritis of renal pelvis origin occurs considerably
-                  more often at women than at men. It begins with sudden fever,
-                  which reaches, and sometimes exceeds 40C. The fever is
-                  accompanied by shivers and one- or both-side lumbar pains,
-                  which are sometimes very strong. Symptoms of acute
-                  inflammation of urinary bladder appear very often. Quite not
-                  infrequently there are nausea and vomiting and spread pains of
-                  whole abdomen.
-                </p>
-              </article>
+              <div class="tile is-child card">
+                <div class="card-content">
+                  <p class="content">Which symptoms are most common?</p>
+                  <div id="divStackedBarChart"></div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        <!-- Home page footer -->
+        <p class="is-pulled-right">
+          Source:
+          <a href="http://archive.ics.uci.edu/ml/datasets/Acute+Inflammations"
+            >http://archive.ics.uci.edu/ml/datasets/Acute+Inflammations</a
+          >
+        </p>
       </div>
     </section>
 
-    <!-- Check Your Symptoms dialog -->
+    <!-- Pop-up dialog that allows user to check their symptoms -->
     <div class="modal" id="modalCheckSymptoms">
       <div class="modal-background"></div>
       <div class="modal-card">
@@ -76,6 +101,7 @@
           <button class="delete" aria-label="close" id="btnCloseModal"></button>
         </header>
         <section class="modal-card-body">
+          <!-- input form -->
           <form name="frm" id="frm">
             {% csrf_token %}
 
@@ -230,6 +256,8 @@
               </div>
             </div>
           </form>
+
+          <!-- table that displays prediction results -->
           <table class="table">
             <tbody id="tblResult"></tbody>
           </table>
@@ -244,7 +272,13 @@
       </div>
     </div>
 
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
     {% load static %}
     <script src="{% static 'home.js' %}"></script>
+    {% load static %}
+    <script src="{% static 'charts.js' %}"></script>
   </body>
 </html>
